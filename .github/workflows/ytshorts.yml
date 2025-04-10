@@ -15,31 +15,22 @@ jobs:
       ELEVENLABS_API_KEY: sk_f165fcd0dc8fc1add50393e50d8501df185561420ed92002
       GEMINI_API_KEY: AIzaSyBaHx9w6G6Ffz2Wq37wyEZYVi6b4REN8GQ
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set executable permissions
+        run: chmod +x shorts_workflow/*.sh
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          brew install ffmpeg jq
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
 
-      - name: Make working directory
-        run: |
-          mkdir -p shorts_workflow
-          
-      - name: Make all scripts executable
-        run: chmod +x *.sh
-
-
-      - name: Run demo.sh with YouTube URL
-        run: |
-          chmod +x demo.sh
-          ./demo.sh "${{ github.event.inputs.youtube_url }}"
+      - name: Run demo.sh with YouTube video URL
+        run: ./shorts_workflow/demo.sh "${{ github.event.inputs.video_url }}"
 
       - name: Upload generated content
         uses: actions/upload-artifact@v4
