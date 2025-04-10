@@ -1,18 +1,19 @@
 #!/bin/bash
+set -e
 
-url="$1"
-video_id=$(echo "$url" | grep -o 'v=[^&]*' | cut -d'=' -f2)
-
-if [[ -z "$video_id" ]]; then
-    echo "Invalid YouTube URL."
-    exit 1
-fi
-
-mkdir -p shorts_workflow/$video_id && cd shorts_workflow/$video_id
+YOUTUBE_URL=$1
+VIDEO_ID=$(echo "$YOUTUBE_URL" | grep -oP '(?<=v=)[^&]+')
 
 echo "Fetching transcript..."
-python3 ../../fetch_with_notegpt.py "$url"
+python3 shorts_workflow/fetch_transcript.py "$VIDEO_ID"
 
-../../summarize.sh "$video_id"
-../../generate_audio.sh "$video_id"
-../../generate_metadata.sh "$video_id"
+echo "Summarizing..."
+./shorts_workflow/summarize.sh "$VIDEO_ID"
+
+echo "Generating audio..."
+./shorts_workflow/generate_audio.sh "$VIDEO_ID"
+
+echo "Creating metadata..."
+./shorts_workflow/generate_metadata.sh "$VIDEO_ID"
+
+echo "✅ Workflow complete for video ID: $VIDEO_ID"
