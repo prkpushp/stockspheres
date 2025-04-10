@@ -31,6 +31,10 @@ jobs:
       - name: Make working directory
         run: |
           mkdir -p shorts_workflow
+          
+      - name: Make all scripts executable
+        run: chmod +x shorts_workflow/*.sh
+
 
       - name: Run demo.sh with YouTube URL
         run: |
