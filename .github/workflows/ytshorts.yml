@@ -33,7 +33,7 @@ jobs:
           mkdir -p shorts_workflow
           
       - name: Make all scripts executable
-        run: chmod +x demo.sh shorts_workflow/*.sh
+        run: chmod +x *.sh
 
 
       - name: Run demo.sh with YouTube URL
