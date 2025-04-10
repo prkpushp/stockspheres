@@ -1,2 +1,3 @@
 requests
 jq
+youtube-transcript-api
