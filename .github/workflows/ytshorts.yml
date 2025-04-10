@@ -1,0 +1,44 @@
+name: YouTube Shorts Generator
+
+on:
+  workflow_dispatch:
+    inputs:
+      youtube_url:
+        description: 'YouTube Video URL'
+        required: true
+        type: string
+
+jobs:
+  generate_shorts:
+    runs-on: macos-latest
+    env:
+      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          brew install ffmpeg jq
+
+      - name: Make working directory
+        run: |
+          mkdir -p shorts_workflow
+
+      - name: Run demo.sh with YouTube URL
+        run: |
+          chmod +x demo.sh
+          ./demo.sh "${{ github.event.inputs.youtube_url }}"
+
+      - name: Upload generated content
+        uses: actions/upload-artifact@v4
+        with:
+          name: shorts_outputs
+          path: shorts_workflow
