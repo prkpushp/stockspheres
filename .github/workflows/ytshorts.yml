@@ -12,8 +12,8 @@ jobs:
   generate_shorts:
     runs-on: macos-latest
     env:
-      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      ELEVENLABS_API_KEY: sk_f165fcd0dc8fc1add50393e50d8501df185561420ed92002
+      GEMINI_API_KEY: AIzaSyBaHx9w6G6Ffz2Wq37wyEZYVi6b4REN8GQ
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
