@@ -16,4 +16,6 @@ echo "Generating audio..."
 echo "Creating metadata..."
 ./generate_metadata.sh "$VIDEO_ID"
 
+ffmpeg -i "shortswork_flow/$VIDEO_ID/$VIDEO_ID.mp3" -filter:a "atempo=1.25" "shortswork_flow/$VIDEO_ID/$VIDEO_ID_fast.mp3"
+
 echo "✅ Workflow complete for video ID: $VIDEO_ID"
