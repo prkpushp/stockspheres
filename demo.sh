@@ -2,7 +2,7 @@
 set -e
 
 YOUTUBE_URL=$1
-VIDEO_ID=$(echo "$YOUTUBE_URL" | grep -oP '(?<=v=)[^&]+')
+VIDEO_ID=$(echo "$YOUTUBE_URL" | sed -n 's/.*v=\([^&]*\).*/\1/p')
 
 echo "Fetching transcript..."
 python3 shortswork_flow/fetch_transcript.py "$VIDEO_ID"
