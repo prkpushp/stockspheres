@@ -2,8 +2,8 @@
 
 video_id="$1"
 ELEVENLABS_API_KEY="${{ secrets.ELEVENLABS_API_KEY }}"
-text=$(cat "shorts_workflow/$video_id/${video_id}_summary.txt" | jq -Rs .)
-output="shorts_workflow/$video_id/${video_id}.mp3"
+text=$(cat "shortswork_flow/$video_id/${video_id}_summary.txt" | jq -Rs .)
+output="shortswork_flow/$video_id/${video_id}.mp3"
 
 body=$(cat <<EOF
 {
@@ -18,4 +18,7 @@ body=$(cat <<EOF
 EOF
 )
 
-curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/rFzjTA9NFWPsUdx39OwG"      -H "Content-Type: application/json"      -H "xi-api-key: $ELEVENLABS_API_KEY"      -d "$body" --output "$output"
+curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/rFzjTA9NFWPsUdx39OwG" \
+     -H "Content-Type: application/json" \
+     -H "xi-api-key: $ELEVENLABS_API_KEY" \
+     -d "$body" --output "$output"
